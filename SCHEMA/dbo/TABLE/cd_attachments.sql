@@ -4,8 +4,8 @@ CREATE TABLE dbo.cd_attachments (
 	fn_route uuid,
 	fn_point uuid,
 	fn_result uuid,
-	n_longitude numeric(20, 15),
-	n_latitude numeric(20, 15),
+	n_longitude numeric(20,15),
+	n_latitude numeric(20,15),
 	c_name text NOT NULL,
 	c_dir text NOT NULL,
 	ba_data bytea,
@@ -24,11 +24,11 @@ COMMENT ON COLUMN dbo.cd_attachments.id IS 'Идентификатор';
 
 COMMENT ON COLUMN dbo.cd_attachments.fn_user IS 'Пользователь';
 
-COMMENT ON COLUMN dbo.cd_attachments.fn_result IS 'Результат';
+COMMENT ON COLUMN dbo.cd_attachments.fn_route IS 'Маршрут';
 
 COMMENT ON COLUMN dbo.cd_attachments.fn_point IS 'Точка';
 
-COMMENT ON COLUMN dbo.cd_attachments.fn_route IS 'Маршрут';
+COMMENT ON COLUMN dbo.cd_attachments.fn_result IS 'Результат';
 
 COMMENT ON COLUMN dbo.cd_attachments.n_longitude IS 'Долгота';
 

@@ -1,24 +1,14 @@
--- FUNCTION: core.sf_version_to_number(text)
-
--- DROP FUNCTION IF EXISTS core.sf_version_to_number(text);
-
-CREATE OR REPLACE FUNCTION core.sf_version_to_number(
-	_c_version text)
-    RETURNS bigint
-    LANGUAGE plpgsql
-    COST 100
-    STABLE PARALLEL UNSAFE
-AS $BODY$
+CREATE OR REPLACE FUNCTION core.sf_version_to_number(_c_version text) RETURNS bigint
+    LANGUAGE plpgsql STABLE
+    AS $$
 /**
 * @returns _c_version {text} версия
 */
 BEGIN
 	RETURN (select split_part(_c_version, '.', 2)::integer * 24 * 60) + split_part(_c_version, '.', 4)::integer;
 END
-$BODY$;
+$$;
 
-ALTER FUNCTION core.sf_version_to_number(text)
-    OWNER TO mobwal;
+ALTER FUNCTION core.sf_version_to_number(_c_version text) OWNER TO mobwal;
 
-COMMENT ON FUNCTION core.sf_version_to_number(text)
-    IS 'Преобразование версии в число';
+COMMENT ON FUNCTION core.sf_version_to_number(_c_version text) IS 'Преобразование версии в число';
