@@ -1,22 +1,19 @@
 CREATE TABLE dbo.cd_templates (
 	id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-	f_org bigint NOT NULL,
 	c_name text NOT NULL,
 	c_template text NOT NULL,
 	c_layout text NOT NULL,
 	c_description text,
 	n_order integer NOT NULL,
-	dx_created timestamp without time zone DEFAULT now() NOT NULL,
-	sn_delete boolean DEFAULT false NOT NULL
+	sn_delete boolean DEFAULT false NOT NULL,
+	dx_created timestamp without time zone DEFAULT now() NOT NULL
 );
 
-ALTER TABLE dbo.cd_templates OWNER TO city;
+ALTER TABLE dbo.cd_templates OWNER TO mobwal;
 
 COMMENT ON TABLE dbo.cd_templates IS 'Шаблоны результатов';
 
 COMMENT ON COLUMN dbo.cd_templates.id IS 'Идентификатор';
-
-COMMENT ON COLUMN dbo.cd_templates.f_org IS 'Идентификатор организации';
 
 COMMENT ON COLUMN dbo.cd_templates.c_name IS 'Пользовательское имя шаблона';
 

@@ -6,7 +6,7 @@ CREATE TABLE core.sd_sys_log (
 	dx_created timestamp without time zone
 );
 
-ALTER TABLE core.sd_sys_log OWNER TO city;
+ALTER TABLE core.sd_sys_log OWNER TO mobwal;
 
 COMMENT ON TABLE core.sd_sys_log IS 'Системное логирование';
 

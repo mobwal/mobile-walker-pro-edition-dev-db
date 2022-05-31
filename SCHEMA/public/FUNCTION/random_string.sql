@@ -16,4 +16,4 @@ begin
 end;
 $$;
 
-ALTER FUNCTION public.random_string(length integer) OWNER TO city;
+ALTER FUNCTION public.random_string(length integer) OWNER TO mobwal;

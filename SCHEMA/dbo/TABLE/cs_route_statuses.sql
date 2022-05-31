@@ -6,7 +6,7 @@ CREATE TABLE dbo.cs_route_statuses (
 	b_disabled boolean DEFAULT false NOT NULL
 );
 
-ALTER TABLE dbo.cs_route_statuses OWNER TO "mobwal-cloud";
+ALTER TABLE dbo.cs_route_statuses OWNER TO mobwal;
 
 COMMENT ON TABLE dbo.cs_route_statuses IS 'Тип результат';
 

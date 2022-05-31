@@ -14,6 +14,6 @@ BEGIN
 END;
 $$;
 
-ALTER FUNCTION public.sf_percent(_n_item numeric, _n_count numeric) OWNER TO city;
+ALTER FUNCTION public.sf_percent(_n_item numeric, _n_count numeric) OWNER TO mobwal;
 
 COMMENT ON FUNCTION public.sf_percent(_n_item numeric, _n_count numeric) IS 'Вычисление процента';

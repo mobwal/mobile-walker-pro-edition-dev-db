@@ -10,4 +10,4 @@ BEGIN
 END;
 $_$;
 
-ALTER FUNCTION public.min(uuid, uuid) OWNER TO city;
+ALTER FUNCTION public.min(uuid, uuid) OWNER TO mobwal;

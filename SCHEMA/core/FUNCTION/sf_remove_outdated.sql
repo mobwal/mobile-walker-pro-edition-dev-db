@@ -21,12 +21,6 @@ BEGIN
 	delete from core.sd_sys_log where (dx_created  + (_n_day_del_after * '1 day'::interval)) < now();
 	get diagnostics _dg_cnt = row_count;
 	_dg_text = _dg_text || now()::text || ' core.sd_sys_log: удалено '|| _dg_cnt::text || E'\n';
-	
-	-- если пользователь заблокирован, то нужно очистить данные по нему
-	perform core.sf_clear_data(u.id) from core.pd_users as u
-	where u.f_org = u.id and u.b_disabled = true and u.sn_delete = false;
-	get diagnostics _dg_cnt = row_count;
-	_dg_text = _dg_text || now()::text || ' core.sf_clear_data: очистка '|| _dg_cnt::text || E'\n';
 
 	perform core.sf_write_log('Очистка таблиц выполнена. ' || E'\n' || _dg_text, null, 0);
 
@@ -38,6 +32,6 @@ BEGIN
 END;
 $$;
 
-ALTER FUNCTION core.sf_remove_outdated() OWNER TO pgagent;
+ALTER FUNCTION core.sf_remove_outdated() OWNER TO mobwal;
 
 COMMENT ON FUNCTION core.sf_remove_outdated() IS 'Процедура очистки устаревших данных';

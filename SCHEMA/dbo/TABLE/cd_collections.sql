@@ -1,10 +1,9 @@
 CREATE TABLE dbo.cd_collections (
 	id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-	f_org bigint NOT NULL,
 	c_address text NOT NULL,
 	c_description text,
-	n_longitude numeric(20,15),
-	n_latitude numeric(20,15),
+	n_longitude numeric(20, 15),
+	n_latitude numeric(20, 15),
 	c_imp_id text,
 	c_append_data text,
 	c_tag text,
@@ -12,13 +11,11 @@ CREATE TABLE dbo.cd_collections (
 	dx_created timestamp without time zone DEFAULT now() NOT NULL
 );
 
-ALTER TABLE dbo.cd_collections OWNER TO city;
+ALTER TABLE dbo.cd_collections OWNER TO mobwal;
 
 COMMENT ON TABLE dbo.cd_collections IS 'Коллекция точек';
 
 COMMENT ON COLUMN dbo.cd_collections.id IS 'Идентификатор';
-
-COMMENT ON COLUMN dbo.cd_collections.f_org IS 'Идентификатор организации';
 
 COMMENT ON COLUMN dbo.cd_collections.c_address IS 'Адрес';
 

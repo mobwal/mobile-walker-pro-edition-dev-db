@@ -19,10 +19,10 @@ BEGIN
 		rh.c_notice
 	from dbo.cd_route_history as rh
 	inner join dbo.cd_routes as r ON r.id = rh.fn_route
-	where r.f_org = (sender#>>'{f_org}')::bigint;
+	where rh.fn_user = (sender#>>'{id}')::bigint;
 END
 $$;
 
-ALTER FUNCTION dbo.of_mui_cd_route_history(sender jsonb, _c_version text) OWNER TO city;
+ALTER FUNCTION dbo.of_mui_cd_route_history(sender jsonb, _c_version text) OWNER TO mobwal;
 
 COMMENT ON FUNCTION dbo.of_mui_cd_route_history(sender jsonb, _c_version text) IS 'История маршрута';

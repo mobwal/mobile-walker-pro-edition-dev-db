@@ -1,6 +1,5 @@
 CREATE TABLE dbo.cd_points (
 	id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-	f_org bigint NOT NULL,
 	fn_route uuid NOT NULL,
 	c_address text NOT NULL,
 	c_description text,
@@ -9,20 +8,18 @@ CREATE TABLE dbo.cd_points (
 	n_longitude numeric(20,15),
 	n_latitude numeric(20,15),
 	jb_data jsonb,
-	dx_created timestamp without time zone DEFAULT now() NOT NULL,
 	c_tag text,
 	b_anomaly boolean DEFAULT false NOT NULL,
 	b_check boolean DEFAULT true NOT NULL,
-	c_comment text
+	c_comment text,
+	dx_created timestamp without time zone DEFAULT now() NOT NULL
 );
 
-ALTER TABLE dbo.cd_points OWNER TO city;
+ALTER TABLE dbo.cd_points OWNER TO mobwal;
 
 COMMENT ON TABLE dbo.cd_points IS 'Точки';
 
 COMMENT ON COLUMN dbo.cd_points.id IS 'Идентификатор';
-
-COMMENT ON COLUMN dbo.cd_points.f_org IS 'Идентификатор организации';
 
 COMMENT ON COLUMN dbo.cd_points.fn_route IS 'Маршрут';
 

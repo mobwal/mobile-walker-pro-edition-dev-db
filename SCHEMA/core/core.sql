@@ -1,3 +1,3 @@
 CREATE SCHEMA core;
 
-ALTER SCHEMA core OWNER TO city;
+ALTER SCHEMA core OWNER TO mobwal;

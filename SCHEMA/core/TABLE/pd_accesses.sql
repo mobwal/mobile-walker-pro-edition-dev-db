@@ -15,7 +15,7 @@ CREATE TABLE core.pd_accesses (
 	sn_delete boolean DEFAULT false NOT NULL
 );
 
-ALTER TABLE core.pd_accesses OWNER TO city;
+ALTER TABLE core.pd_accesses OWNER TO mobwal;
 
 COMMENT ON TABLE core.pd_accesses IS 'Права доступа';
 

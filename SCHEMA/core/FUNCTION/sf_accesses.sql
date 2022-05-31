@@ -27,6 +27,6 @@ BEGIN
  END
 $$;
 
-ALTER FUNCTION core.sf_accesses(c_role_name text, n_currentuser bigint, c_claims text, n_user_id bigint) OWNER TO city;
+ALTER FUNCTION core.sf_accesses(c_role_name text, n_currentuser bigint, c_claims text, n_user_id bigint) OWNER TO mobwal;
 
 COMMENT ON FUNCTION core.sf_accesses(c_role_name text, n_currentuser bigint, c_claims text, n_user_id bigint) IS 'Системная функция для обработки прав. Для внешнего использования не применять';

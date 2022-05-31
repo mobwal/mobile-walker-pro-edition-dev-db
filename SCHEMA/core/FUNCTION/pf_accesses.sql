@@ -24,6 +24,6 @@ BEGIN
 END;
 $$;
 
-ALTER FUNCTION core.pf_accesses(n_user_id bigint) OWNER TO city;
+ALTER FUNCTION core.pf_accesses(n_user_id bigint) OWNER TO mobwal;
 
-COMMENT ON FUNCTION core.pf_accesses(n_user_id bigint) IS 'Системная функция. Получение прав доступа для пользователя. Используется "slave-city-node"JS';
+COMMENT ON FUNCTION core.pf_accesses(n_user_id bigint) IS 'Системная функция. Получение прав доступа для пользователя. Используется "slave-mobwal-node"JS';

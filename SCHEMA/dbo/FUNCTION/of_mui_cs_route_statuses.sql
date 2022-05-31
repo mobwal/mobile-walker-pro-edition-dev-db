@@ -19,6 +19,6 @@ BEGIN
 END
 $$;
 
-ALTER FUNCTION dbo.of_mui_cs_route_statuses(sender jsonb, _c_version text) OWNER TO city;
+ALTER FUNCTION dbo.of_mui_cs_route_statuses(sender jsonb, _c_version text) OWNER TO mobwal;
 
 COMMENT ON FUNCTION dbo.of_mui_cs_route_statuses(sender jsonb, _c_version text) IS 'Справочник статусов маршрутов';

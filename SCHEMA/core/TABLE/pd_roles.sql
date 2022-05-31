@@ -1,33 +1,43 @@
-CREATE FOREIGN TABLE core.pd_roles (
-	id integer NOT NULL,
+CREATE TABLE core.pd_roles (
+	id integer DEFAULT nextval('core.pd_roles_id_seq'::regclass) NOT NULL,
 	c_name text NOT NULL,
 	c_description text,
-	n_weight integer,
-	c_created_user text NOT NULL,
-	d_created_date timestamp without time zone,
+	n_weight integer DEFAULT 0,
+	c_created_user text DEFAULT 'mobwal'::text NOT NULL,
+	d_created_date timestamp without time zone DEFAULT now(),
 	c_change_user text,
-	d_change_date timestamp with time zone,
-	sn_delete boolean NOT NULL
-)
-SERVER master_db
-OPTIONS (schema_name 'core', table_name 'pd_roles');
+	d_change_date timestamp without time zone,
+	sn_delete boolean DEFAULT false NOT NULL
+);
 
-ALTER FOREIGN TABLE core.pd_roles ALTER COLUMN id OPTIONS (column_name 'id');
+ALTER TABLE core.pd_roles OWNER TO mobwal;
 
-ALTER FOREIGN TABLE core.pd_roles ALTER COLUMN c_name OPTIONS (column_name 'c_name');
+COMMENT ON TABLE core.pd_roles IS 'Роли';
 
-ALTER FOREIGN TABLE core.pd_roles ALTER COLUMN c_description OPTIONS (column_name 'c_description');
+COMMENT ON COLUMN core.pd_roles.id IS 'Идентификатор';
 
-ALTER FOREIGN TABLE core.pd_roles ALTER COLUMN n_weight OPTIONS (column_name 'n_weight');
+COMMENT ON COLUMN core.pd_roles.c_name IS 'Наименование';
 
-ALTER FOREIGN TABLE core.pd_roles ALTER COLUMN c_created_user OPTIONS (column_name 'c_created_user');
+COMMENT ON COLUMN core.pd_roles.c_description IS 'Описание роли';
 
-ALTER FOREIGN TABLE core.pd_roles ALTER COLUMN d_created_date OPTIONS (column_name 'd_created_date');
+COMMENT ON COLUMN core.pd_roles.n_weight IS 'Приоритет';
 
-ALTER FOREIGN TABLE core.pd_roles ALTER COLUMN c_change_user OPTIONS (column_name 'c_change_user');
+COMMENT ON COLUMN core.pd_roles.c_created_user IS 'Пользователь создавший запись';
 
-ALTER FOREIGN TABLE core.pd_roles ALTER COLUMN d_change_date OPTIONS (column_name 'd_change_date');
+COMMENT ON COLUMN core.pd_roles.d_created_date IS 'Дата создания записи';
 
-ALTER FOREIGN TABLE core.pd_roles ALTER COLUMN sn_delete OPTIONS (column_name 'sn_delete');
+COMMENT ON COLUMN core.pd_roles.c_change_user IS 'Пользователь обновивший запись';
 
-ALTER FOREIGN TABLE core.pd_roles OWNER TO city;
+COMMENT ON COLUMN core.pd_roles.d_change_date IS 'Дата обновления записи';
+
+COMMENT ON COLUMN core.pd_roles.sn_delete IS 'Удален';
+
+--------------------------------------------------------------------------------
+
+ALTER TABLE core.pd_roles
+	ADD CONSTRAINT pd_roles_uniq_c_name UNIQUE (c_name);
+
+--------------------------------------------------------------------------------
+
+ALTER TABLE core.pd_roles
+	ADD CONSTRAINT pd_roles_pkey PRIMARY KEY (id);

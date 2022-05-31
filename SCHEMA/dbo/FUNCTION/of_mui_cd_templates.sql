@@ -17,11 +17,10 @@ BEGIN
 		t.c_layout,
 		t.c_description,
 		t.n_order
-	from dbo.cd_templates as t
-	where t.f_org = (sender#>>'{f_org}')::bigint;
+	from dbo.cd_templates as t;
 END
 $$;
 
-ALTER FUNCTION dbo.of_mui_cd_templates(sender jsonb, _c_version text) OWNER TO city;
+ALTER FUNCTION dbo.of_mui_cd_templates(sender jsonb, _c_version text) OWNER TO mobwal;
 
 COMMENT ON FUNCTION dbo.of_mui_cd_templates(sender jsonb, _c_version text) IS 'Список шаблона';

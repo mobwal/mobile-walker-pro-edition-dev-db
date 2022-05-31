@@ -8,7 +8,7 @@ CREATE TABLE core.sd_action_log (
 	d_date timestamp without time zone
 );
 
-ALTER TABLE core.sd_action_log OWNER TO city;
+ALTER TABLE core.sd_action_log OWNER TO mobwal;
 
 COMMENT ON TABLE core.sd_action_log IS 'Логирование действий пользователей с данными. Полная информация';
 

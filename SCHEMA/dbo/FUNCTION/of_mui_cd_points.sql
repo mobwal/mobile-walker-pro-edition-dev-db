@@ -10,8 +10,7 @@ CREATE OR REPLACE FUNCTION dbo.of_mui_cd_points(sender jsonb, _c_version text) R
 */
 BEGIN
     RETURN QUERY 
-	select
-		p.id,
+	select p.id,
 		p.fn_route,
 		p.c_address,
 		p.c_description,
@@ -23,10 +22,13 @@ BEGIN
 		p.b_check,
 		p.c_comment
 	from dbo.cd_points as p
-	where p.f_org = (sender#>>'{f_org}')::bigint;
+    inner join dbo.cd_routes as r on r.id = p.fn_route
+	inner join dbo.cd_route_history as rh ON rh.fn_route = r.id
+	inner join dbo.cs_route_statuses as rs ON rh.fn_status = rs.id
+	where uir.f_user = (sender#>>'{id}')::bigint and (rs.c_const = 'ASSIGNED' or rs.c_const = 'NO_VERIFIED');
 END
 $$;
 
-ALTER FUNCTION dbo.of_mui_cd_points(sender jsonb, _c_version text) OWNER TO city;
+ALTER FUNCTION dbo.of_mui_cd_points(sender jsonb, _c_version text) OWNER TO mobwal;
 
 COMMENT ON FUNCTION dbo.of_mui_cd_points(sender jsonb, _c_version text) IS 'Список задание';

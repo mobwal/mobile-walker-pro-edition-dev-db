@@ -8,7 +8,7 @@ CREATE TABLE dbo.cd_route_history (
 	dx_created timestamp without time zone DEFAULT now()
 );
 
-ALTER TABLE dbo.cd_route_history OWNER TO "mobwal-cloud";
+ALTER TABLE dbo.cd_route_history OWNER TO mobwal;
 
 COMMENT ON TABLE dbo.cd_route_history IS 'История изменения статусов заданий';
 

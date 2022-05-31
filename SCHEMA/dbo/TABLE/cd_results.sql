@@ -3,15 +3,15 @@ CREATE TABLE dbo.cd_results (
 	fn_route uuid,
 	fn_point uuid,
 	fn_user bigint,
-	d_date timestamp without time zone,
-	b_disabled boolean DEFAULT false NOT NULL,
 	n_longitude numeric(20,15),
 	n_latitude numeric(20,15),
 	jb_data jsonb,
-	dx_created timestamp without time zone DEFAULT now() NOT NULL,
 	c_notice text,
 	n_distance bigint,
-	fn_template uuid
+	fn_template uuid,
+	b_disabled boolean DEFAULT false NOT NULL,
+	d_date timestamp without time zone,
+	dx_created timestamp without time zone DEFAULT now() NOT NULL
 );
 
 ALTER TABLE dbo.cd_results OWNER TO "mobwal-cloud";

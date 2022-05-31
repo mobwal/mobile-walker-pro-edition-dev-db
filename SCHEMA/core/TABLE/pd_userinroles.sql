@@ -1,30 +1,52 @@
-CREATE FOREIGN TABLE core.pd_userinroles (
-	id uuid NOT NULL,
+CREATE TABLE core.pd_userinroles (
+	id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
 	f_user integer NOT NULL,
 	f_role integer NOT NULL,
-	c_created_user text NOT NULL,
-	d_created_date timestamp with time zone,
+	c_created_user text DEFAULT 'mobwal'::text NOT NULL,
+	d_created_date timestamp with time zone DEFAULT now(),
 	c_change_user text,
 	d_change_date timestamp with time zone,
-	sn_delete boolean NOT NULL
-)
-SERVER master_db
-OPTIONS (schema_name 'core', table_name 'pd_userinroles');
+	sn_delete boolean DEFAULT false NOT NULL
+);
 
-ALTER FOREIGN TABLE core.pd_userinroles ALTER COLUMN id OPTIONS (column_name 'id');
+ALTER TABLE core.pd_userinroles OWNER TO mobwal;
 
-ALTER FOREIGN TABLE core.pd_userinroles ALTER COLUMN f_user OPTIONS (column_name 'f_user');
+COMMENT ON TABLE core.pd_userinroles IS 'Пользователи в ролях';
 
-ALTER FOREIGN TABLE core.pd_userinroles ALTER COLUMN f_role OPTIONS (column_name 'f_role');
+COMMENT ON COLUMN core.pd_userinroles.id IS 'Идентификатор';
 
-ALTER FOREIGN TABLE core.pd_userinroles ALTER COLUMN c_created_user OPTIONS (column_name 'c_created_user');
+COMMENT ON COLUMN core.pd_userinroles.f_user IS 'Пользователь';
 
-ALTER FOREIGN TABLE core.pd_userinroles ALTER COLUMN d_created_date OPTIONS (column_name 'd_created_date');
+COMMENT ON COLUMN core.pd_userinroles.f_role IS 'Роль';
 
-ALTER FOREIGN TABLE core.pd_userinroles ALTER COLUMN c_change_user OPTIONS (column_name 'c_change_user');
+COMMENT ON COLUMN core.pd_userinroles.c_created_user IS 'Пользователь создавший запись';
 
-ALTER FOREIGN TABLE core.pd_userinroles ALTER COLUMN d_change_date OPTIONS (column_name 'd_change_date');
+COMMENT ON COLUMN core.pd_userinroles.d_created_date IS 'Дата создания записи';
 
-ALTER FOREIGN TABLE core.pd_userinroles ALTER COLUMN sn_delete OPTIONS (column_name 'sn_delete');
+COMMENT ON COLUMN core.pd_userinroles.c_change_user IS 'Пользователь обновивший запись';
 
-ALTER FOREIGN TABLE core.pd_userinroles OWNER TO city;
+COMMENT ON COLUMN core.pd_userinroles.d_change_date IS 'Дата обновления записи';
+
+COMMENT ON COLUMN core.pd_userinroles.sn_delete IS 'Удален';
+
+--------------------------------------------------------------------------------
+
+CREATE TRIGGER pd_userinroles_log
+	BEFORE INSERT OR UPDATE OR DELETE ON core.pd_userinroles
+	FOR EACH ROW
+	EXECUTE PROCEDURE core.sft_log_action();
+
+--------------------------------------------------------------------------------
+
+ALTER TABLE core.pd_userinroles
+	ADD CONSTRAINT pd_userinroles_pkey PRIMARY KEY (id);
+
+--------------------------------------------------------------------------------
+
+ALTER TABLE core.pd_userinroles
+	ADD CONSTRAINT pd_userinroles_f_role_fkey FOREIGN KEY (f_role) REFERENCES core.pd_roles(id);
+
+--------------------------------------------------------------------------------
+
+ALTER TABLE core.pd_userinroles
+	ADD CONSTRAINT pd_userinroles_f_user_fkey FOREIGN KEY (f_user) REFERENCES core.pd_users(id);

@@ -1,5 +1,5 @@
-CREATE FOREIGN TABLE core.pd_users (
-	id bigint NOT NULL,
+CREATE TABLE core.pd_users (
+	id bigint DEFAULT nextval('core.pd_users_id_seq'::regclass) NOT NULL,
 	c_login text NOT NULL,
 	c_password text,
 	s_hash text,
@@ -8,7 +8,6 @@ CREATE FOREIGN TABLE core.pd_users (
 	c_name text,
 	c_post text,
 	c_imp_id text,
-	f_org bigint,
 	f_level uuid,
 	c_notice text,
 	c_email text,
@@ -16,63 +15,89 @@ CREATE FOREIGN TABLE core.pd_users (
 	n_version bigint,
 	d_last_auth_date timestamp without time zone,
 	d_last_change_password timestamp without time zone,
-	c_created_user text NOT NULL,
-	d_created_date timestamp without time zone,
-	c_change_user text,
+	c_created_user text DEFAULT 'mobwal'::text NOT NULL,
+	d_created_date timestamp without time zone DEFAULT now() NOT NULL,
+	c_change_user text DEFAULT 'mobwal'::text,
 	d_change_date timestamp without time zone,
-	b_disabled boolean,
-	sn_delete boolean,
-	d_date_remove timestamp without time zone
-)
-SERVER master_db
-OPTIONS (schema_name 'core', table_name 'pd_users');
+	b_disabled boolean DEFAULT false NOT NULL,
+	sn_delete boolean DEFAULT false NOT NULL,
+	d_date_remove timestamp without time zone,
+	b_back_pay boolean DEFAULT false NOT NULL
+);
 
-ALTER FOREIGN TABLE core.pd_users ALTER COLUMN id OPTIONS (column_name 'id');
+ALTER TABLE core.pd_users OWNER TO mobwal;
 
-ALTER FOREIGN TABLE core.pd_users ALTER COLUMN c_login OPTIONS (column_name 'c_login');
+COMMENT ON TABLE core.pd_users IS 'Пользователи';
 
-ALTER FOREIGN TABLE core.pd_users ALTER COLUMN c_password OPTIONS (column_name 'c_password');
+COMMENT ON COLUMN core.pd_users.id IS 'Идентификатор';
 
-ALTER FOREIGN TABLE core.pd_users ALTER COLUMN s_hash OPTIONS (column_name 's_hash');
+COMMENT ON COLUMN core.pd_users.c_login IS 'Логин';
 
-ALTER FOREIGN TABLE core.pd_users ALTER COLUMN jb_data OPTIONS (column_name 'jb_data');
+COMMENT ON COLUMN core.pd_users.c_password IS 'Пароль';
 
-ALTER FOREIGN TABLE core.pd_users ALTER COLUMN c_about OPTIONS (column_name 'c_about');
+COMMENT ON COLUMN core.pd_users.s_hash IS 'Hash';
 
-ALTER FOREIGN TABLE core.pd_users ALTER COLUMN c_name OPTIONS (column_name 'c_name');
+COMMENT ON COLUMN core.pd_users.c_about IS 'О себе';
 
-ALTER FOREIGN TABLE core.pd_users ALTER COLUMN c_post OPTIONS (column_name 'c_post');
+COMMENT ON COLUMN core.pd_users.c_name IS 'Имя/ФИО';
 
-ALTER FOREIGN TABLE core.pd_users ALTER COLUMN c_imp_id OPTIONS (column_name 'c_imp_id');
+COMMENT ON COLUMN core.pd_users.c_post IS 'Должность/Пост';
 
-ALTER FOREIGN TABLE core.pd_users ALTER COLUMN f_org OPTIONS (column_name 'f_org');
+COMMENT ON COLUMN core.pd_users.c_imp_id IS 'Идентификатор для импорта/экспорта';
 
-ALTER FOREIGN TABLE core.pd_users ALTER COLUMN f_level OPTIONS (column_name 'f_level');
+COMMENT ON COLUMN core.pd_users.c_notice IS 'Примечание, которое указывается администратором ';
 
-ALTER FOREIGN TABLE core.pd_users ALTER COLUMN c_notice OPTIONS (column_name 'c_notice');
+COMMENT ON COLUMN core.pd_users.c_email IS 'Адрес электронной почты';
 
-ALTER FOREIGN TABLE core.pd_users ALTER COLUMN c_email OPTIONS (column_name 'c_email');
+COMMENT ON COLUMN core.pd_users.c_version IS 'Версия приложения';
 
-ALTER FOREIGN TABLE core.pd_users ALTER COLUMN c_version OPTIONS (column_name 'c_version');
+COMMENT ON COLUMN core.pd_users.n_version IS 'Числовой вариант версии приложения';
 
-ALTER FOREIGN TABLE core.pd_users ALTER COLUMN n_version OPTIONS (column_name 'n_version');
+COMMENT ON COLUMN core.pd_users.d_last_auth_date IS 'Дата последней авторизации';
 
-ALTER FOREIGN TABLE core.pd_users ALTER COLUMN d_last_auth_date OPTIONS (column_name 'd_last_auth_date');
+COMMENT ON COLUMN core.pd_users.d_last_change_password IS 'Дата изменения пароля';
 
-ALTER FOREIGN TABLE core.pd_users ALTER COLUMN d_last_change_password OPTIONS (column_name 'd_last_change_password');
+COMMENT ON COLUMN core.pd_users.d_created_date IS 'Дата создания записи';
 
-ALTER FOREIGN TABLE core.pd_users ALTER COLUMN c_created_user OPTIONS (column_name 'c_created_user');
+COMMENT ON COLUMN core.pd_users.d_change_date IS 'Дата обновления записи';
 
-ALTER FOREIGN TABLE core.pd_users ALTER COLUMN d_created_date OPTIONS (column_name 'd_created_date');
+COMMENT ON COLUMN core.pd_users.b_disabled IS 'Отключен';
 
-ALTER FOREIGN TABLE core.pd_users ALTER COLUMN c_change_user OPTIONS (column_name 'c_change_user');
+COMMENT ON COLUMN core.pd_users.sn_delete IS 'Удален';
 
-ALTER FOREIGN TABLE core.pd_users ALTER COLUMN d_change_date OPTIONS (column_name 'd_change_date');
+COMMENT ON COLUMN core.pd_users.d_date_remove IS 'Дата удаления';
 
-ALTER FOREIGN TABLE core.pd_users ALTER COLUMN b_disabled OPTIONS (column_name 'b_disabled');
+COMMENT ON COLUMN core.pd_users.b_back_pay IS 'Оплата по факту периода. Разрешено заходить в минус';
 
-ALTER FOREIGN TABLE core.pd_users ALTER COLUMN sn_delete OPTIONS (column_name 'sn_delete');
+--------------------------------------------------------------------------------
 
-ALTER FOREIGN TABLE core.pd_users ALTER COLUMN d_date_remove OPTIONS (column_name 'd_date_remove');
+CREATE INDEX pd_users_b_disabled_sn_delete_idx ON core.pd_users USING btree (b_disabled, sn_delete);
 
-ALTER FOREIGN TABLE core.pd_users OWNER TO city;
+--------------------------------------------------------------------------------
+
+CREATE TRIGGER pd_users_log
+	BEFORE INSERT OR UPDATE OR DELETE ON core.pd_users
+	FOR EACH ROW
+	EXECUTE PROCEDURE core.sft_log_action();
+
+--------------------------------------------------------------------------------
+
+CREATE TRIGGER pd_users_trigger_version
+	BEFORE INSERT OR UPDATE ON core.pd_users
+	FOR EACH ROW
+	EXECUTE PROCEDURE core.sft_convert_version();
+
+--------------------------------------------------------------------------------
+
+ALTER TABLE core.pd_users
+	ADD CONSTRAINT pd_users_pkey PRIMARY KEY (id);
+
+--------------------------------------------------------------------------------
+
+ALTER TABLE core.pd_users
+	ADD CONSTRAINT pd_users_uniq_c_login UNIQUE (c_login);
+
+--------------------------------------------------------------------------------
+
+ALTER TABLE core.pd_users
+	ADD CONSTRAINT pd_users_f_level_fkey FOREIGN KEY (f_level) REFERENCES core.pd_levels(id);
