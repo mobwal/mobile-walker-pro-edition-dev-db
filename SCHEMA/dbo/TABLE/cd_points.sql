@@ -8,9 +8,8 @@ CREATE TABLE dbo.cd_points (
 	n_longitude numeric(20,15),
 	n_latitude numeric(20,15),
 	jb_data jsonb,
-	c_tag text,
 	b_anomaly boolean DEFAULT false NOT NULL,
-	b_check boolean DEFAULT true NOT NULL,
+	b_check boolean DEFAULT false NOT NULL,
 	c_comment text,
 	dx_created timestamp without time zone DEFAULT now() NOT NULL
 );

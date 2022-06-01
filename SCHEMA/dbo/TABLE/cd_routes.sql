@@ -2,7 +2,6 @@ CREATE TABLE dbo.cd_routes (
 	id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
 	c_name text NOT NULL,
 	c_description text,
-	b_check boolean DEFAULT false NOT NULL,
 	dx_created timestamp without time zone DEFAULT now() NOT NULL
 );
 

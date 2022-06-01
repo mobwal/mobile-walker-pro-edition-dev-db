@@ -20,9 +20,21 @@ values(1, 2), (2, 3);
 insert into dbo.cs_route_statuses(id, c_name, c_const, n_order) values
 (1, '{"en": "Created","ru": "Создан"}', 'CREATED', 0),
 (2, '{"en": "Assigned","ru": "Назначен"}', 'ASSIGNED', 1),
-(3, '{"en": "Doned","ru": "Выполнено"}', 'DONED', 2),
-(4, '{"en": "Verified","ru": "Проверено"}', 'VERIFIED', 3),
-(5, '{"en": "No verified","ru": "Не проверено"}', 'NO_VERIFIED', 4),
-(6, '{"en": "Cancel","ru": "Отмена"}', 'CANCEL', 5);
+(3, '{"en": "Verified","ru": "Проверено"}', 'VERIFIED', 2),
+(4, '{"en": "No verified","ru": "Не проверено"}', 'NO_VERIFIED', 3),
+(5, '{"en": "Cancel","ru": "Отмена"}', 'CANCEL', 4);
+
+-- тестовые данные
+insert into dbo.cd_routes(id, c_name, c_description) values
+('e6c4bd3d-afc4-4669-ae5b-a79082f8b8bd', 'Первый маршрут #1', 'simple route <b>#<font color="red">1</font></b>'),
+('732fded2-2417-4018-9edb-f499de11caf5', 'Мой маршрут', 'Нужно выполнить задания в короткие сроки до февраля 2023');
+
+insert into dbo.cd_points(id, fn_route, c_address, c_description, n_order, n_longitude, n_latitude, jb_data) values
+('9411304d-9f3e-4f9c-9aca-f7d81aa8f4ff', 'e6c4bd3d-afc4-4669-ae5b-a79082f8b8bd', 'Автомойка', 'simple description <b>#<font color="red">1</font></b>', 0, 47.223519000000000, 56.140905000000000, '{"{5}": "auto"}'),
+('b5c55feb-367b-45c6-9015-f117d796da4e', 'e6c4bd3d-afc4-4669-ae5b-a79082f8b8bd', 'Магазин пятерочка', 'simple description <b>#<font color="red">1</font></b>', 1, 47.219839000000000, 56.140080000000000, '{"{5}": "soc"}');
+
+insert into dbo.cd_points(id, fn_route, c_address, c_description, n_order, n_longitude, n_latitude, jb_data) values
+('f8566b1a-fb22-469a-ba90-d41140e265c0', 'e6c4bd3d-afc4-4669-ae5b-a79082f8b8bd', 'Моя точка', 'Для примера импорта', 0, 47.238421000000000, 56.143206000000000),
+('1d2aec12-a4f3-4403-9e4a-bd5052c5cd0b', 'e6c4bd3d-afc4-4669-ae5b-a79082f8b8bd', 'Магазин пятерочка', null, 1, 47.219839000000000, 56.140080000000000);
 
 COMMIT TRANSACTION;

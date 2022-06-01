@@ -18,11 +18,10 @@ BEGIN
 		a.n_longitude,
 		a.n_latitude,
 		a.d_date,
-		s.c_name,
+		a.c_name,
 		a.n_distance
 	from dbo.cd_attachments as a
-	inner join dbo.sd_storages as s ON s.id = a.f_storage
-	where s.f_user = (sender#>>'{id}')::bigint;
+	where a.fn_user = (sender#>>'{id}')::bigint;
 END
 $$;
 

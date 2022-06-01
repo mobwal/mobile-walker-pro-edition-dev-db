@@ -3,7 +3,6 @@ CREATE TABLE dbo.cd_route_history (
 	fn_route uuid NOT NULL,
 	fn_status integer NOT NULL,
 	fn_user integer NOT NULL,
-	d_date timestamp without time zone NOT NULL,
 	c_notice text,
 	dx_created timestamp without time zone DEFAULT now()
 );
@@ -19,8 +18,6 @@ COMMENT ON COLUMN dbo.cd_route_history.fn_route IS 'Задание';
 COMMENT ON COLUMN dbo.cd_route_history.fn_status IS 'Статус';
 
 COMMENT ON COLUMN dbo.cd_route_history.fn_user IS 'Пользователь';
-
-COMMENT ON COLUMN dbo.cd_route_history.d_date IS 'Дата изменения';
 
 COMMENT ON COLUMN dbo.cd_route_history.c_notice IS 'Примечание';
 
