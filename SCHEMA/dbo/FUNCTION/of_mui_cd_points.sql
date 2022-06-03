@@ -23,9 +23,9 @@ BEGIN
 		p.c_comment
 	from dbo.cd_points as p
     inner join dbo.cd_routes as r on r.id = p.fn_route
-	inner join dbo.cd_route_history as rh ON rh.fn_route = r.id
-	inner join dbo.cs_route_statuses as rs ON rh.fn_status = rs.id
-	where uir.f_user = (sender#>>'{id}')::bigint and (rs.c_const = 'ASSIGNED' or rs.c_const = 'NO_VERIFIED');
+	inner join dbo.cd_route_history as rh ON rh.f_route = r.id
+	inner join dbo.cs_route_statuses as rs ON rh.f_status = rs.id
+	where rh.f_user = (sender#>>'{id}')::bigint and (rs.c_const = 'ASSIGNED' or rs.c_const = 'NO_VERIFIED');
 END
 $$;
 

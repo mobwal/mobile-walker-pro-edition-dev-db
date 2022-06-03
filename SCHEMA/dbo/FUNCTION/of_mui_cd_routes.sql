@@ -11,9 +11,9 @@ CREATE OR REPLACE FUNCTION dbo.of_mui_cd_routes(sender jsonb, _c_version text) R
 BEGIN
     RETURN QUERY select r.id, r.c_name, r.c_description, false
     from dbo.cd_routes as r
-	inner join dbo.cd_route_history as rh ON rh.fn_route = r.id
-	inner join dbo.cs_route_statuses as rs ON rh.fn_status = rs.id
-	where uir.f_user = (sender#>>'{id}')::bigint and (rs.c_const = 'ASSIGNED' or rs.c_const = 'NO_VERIFIED');
+	inner join dbo.cd_route_history as rh ON rh.f_route = r.id
+	inner join dbo.cs_route_statuses as rs ON rh.f_status = rs.id
+	where rh.f_user = (sender#>>'{id}')::bigint and (rs.c_const = 'ASSIGNED' or rs.c_const = 'NO_VERIFIED');
 END
 $$;
 

@@ -14,7 +14,7 @@ CREATE TABLE dbo.cd_results (
 	dx_created timestamp without time zone DEFAULT now() NOT NULL
 );
 
-ALTER TABLE dbo.cd_results OWNER TO "mobwal-cloud";
+ALTER TABLE dbo.cd_results OWNER TO mobwal;
 
 COMMENT ON TABLE dbo.cd_results IS 'Результат выполнения';
 

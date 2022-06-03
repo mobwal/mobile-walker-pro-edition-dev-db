@@ -11,18 +11,18 @@ CREATE OR REPLACE FUNCTION dbo.of_mui_cd_results(sender jsonb, _c_version text) 
 BEGIN
     RETURN QUERY 
 	select
-		rh.id,
-		rh.fn_route,
-		rh.fn_point,
-		rh.fn_user,
-		rh.d_date,
-		rh.b_disabled,
-		rh.n_longitude,
-		rh.n_latitude,
-		rh.jb_data::text,
-		rh.c_notice,
-		rh.n_distance,
-		rh.fn_template
+		r.id,
+		r.fn_route,
+		r.fn_point,
+		r.fn_user,
+		r.d_date,
+		r.b_disabled,
+		r.n_longitude,
+		r.n_latitude,
+		r.jb_data::text,
+		r.c_notice,
+		r.n_distance,
+		r.fn_template
 	from dbo.cd_results as r
 	where r.fn_user = (sender#>>'{id}')::bigint;
 END
