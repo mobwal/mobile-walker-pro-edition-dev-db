@@ -40,6 +40,10 @@ COMMENT ON COLUMN dbo.cd_points.dx_created IS 'Дата создания в БД
 
 --------------------------------------------------------------------------------
 
+CREATE INDEX cd_points_fn_route_b_ckeck_idx ON dbo.cd_points USING btree (fn_route, b_check);
+
+--------------------------------------------------------------------------------
+
 ALTER TABLE dbo.cd_points
 	ADD CONSTRAINT cd_points_pkey PRIMARY KEY (id);
 

@@ -6,7 +6,7 @@ CREATE OR REPLACE FUNCTION dbo.of_mui_cd_results(sender jsonb, _c_version text) 
 * @params {text} _c_version - текущая версия приложения
 *
 * @example
-* [{ "action": "of_mui_cd_results", "method": "Select", "data": [{ "params": [sender, _c_version] }], "type": "rpc", "tid": 0 }]
+* [{ "action": "of_mui_cd_results", "schema": "dbo", "method": "Select", "data": [{ "params": [sender, _c_version] }], "type": "rpc", "tid": 0 }]
 */
 BEGIN
     RETURN QUERY 
@@ -23,8 +23,10 @@ BEGIN
 		r.c_notice,
 		r.n_distance,
 		r.fn_template
-	from dbo.cd_results as r
-	where r.fn_user = (sender#>>'{id}')::bigint;
+	from dbo.cd_results as rr
+    inner join dbo.cd_routes as r on r.id = rr.fn_route
+	inner join dbo.cs_route_statuses as rs ON r.f_status = rs.id
+	where r.f_user = (sender#>>'{id}')::bigint and rs.c_const = 'ASSIGNED';
 END
 $$;
 

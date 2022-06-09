@@ -7,7 +7,7 @@ CREATE TABLE dbo.cd_attachments (
 	n_longitude numeric(20,15),
 	n_latitude numeric(20,15),
 	c_name text NOT NULL,
-	c_dir text NOT NULL,
+	c_dir text,
 	ba_data bytea,
 	n_size integer NOT NULL,
 	c_mime text NOT NULL,
@@ -49,6 +49,10 @@ COMMENT ON COLUMN dbo.cd_attachments.n_distance IS 'Дистанция до за
 COMMENT ON COLUMN dbo.cd_attachments.d_date IS 'Дата';
 
 COMMENT ON COLUMN dbo.cd_attachments.dx_created IS 'Дата создания в БД';
+
+--------------------------------------------------------------------------------
+
+CREATE INDEX cd_attachments_fn_user_idx ON dbo.cd_attachments USING btree (fn_user);
 
 --------------------------------------------------------------------------------
 

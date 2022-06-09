@@ -45,4 +45,9 @@ CREATE TRIGGER sd_settings_log
 --------------------------------------------------------------------------------
 
 ALTER TABLE core.sd_settings
+	ADD CONSTRAINT sd_settings_uniq_c_key UNIQUE (c_key);
+
+--------------------------------------------------------------------------------
+
+ALTER TABLE core.sd_settings
 	ADD CONSTRAINT sd_settings_pkey PRIMARY KEY (id);

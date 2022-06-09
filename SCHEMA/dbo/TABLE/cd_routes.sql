@@ -2,7 +2,10 @@ CREATE TABLE dbo.cd_routes (
 	id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
 	c_name text NOT NULL,
 	c_description text,
-	dx_created timestamp without time zone DEFAULT now() NOT NULL
+	dx_created timestamp without time zone DEFAULT now() NOT NULL,
+	c_templates text,
+	f_user bigint,
+	f_status integer
 );
 
 ALTER TABLE dbo.cd_routes OWNER TO mobwal;
@@ -19,5 +22,8 @@ COMMENT ON COLUMN dbo.cd_routes.dx_created IS 'Дата создания в БД
 
 --------------------------------------------------------------------------------
 
+CREATE INDEX cd_routes_f_user_idx ON dbo.cd_routes USING btree (f_user);
+
+--------------------------------------------------------------------------------
 ALTER TABLE dbo.cd_routes
 	ADD CONSTRAINT cd_routes_pkey PRIMARY KEY (id);

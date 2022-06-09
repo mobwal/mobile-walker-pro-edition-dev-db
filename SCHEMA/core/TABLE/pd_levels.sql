@@ -13,7 +13,7 @@ CREATE TABLE core.pd_levels (
 
 ALTER TABLE core.pd_levels OWNER TO mobwal;
 
-COMMENT ON TABLE core.pd_levels IS 'Уровени';
+COMMENT ON TABLE core.pd_levels IS 'Подразделения (уровни)';
 
 COMMENT ON COLUMN core.pd_levels.id IS 'Идентификатор';
 
@@ -28,6 +28,10 @@ COMMENT ON COLUMN core.pd_levels.c_description IS 'Описание';
 COMMENT ON COLUMN core.pd_levels.d_created_date IS 'Дата создания';
 
 COMMENT ON COLUMN core.pd_levels.d_change_date IS 'Дата модификации';
+
+--------------------------------------------------------------------------------
+
+CREATE INDEX pd_levels_f_parent_idx ON core.pd_levels USING btree (f_parent);
 
 --------------------------------------------------------------------------------
 

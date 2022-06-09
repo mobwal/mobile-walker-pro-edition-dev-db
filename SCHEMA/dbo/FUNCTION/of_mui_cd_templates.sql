@@ -6,7 +6,7 @@ CREATE OR REPLACE FUNCTION dbo.of_mui_cd_templates(sender jsonb, _c_version text
 * @params {text} _c_version - текущая версия приложения
 *
 * @example
-* [{ "action": "of_mui_cd_templates", "method": "Select", "data": [{ "params": [sender, _c_version] }], "type": "rpc", "tid": 0 }]
+* [{ "action": "of_mui_cd_templates", "schema": "dbo", "method": "Select", "data": [{ "params": [sender, _c_version] }], "type": "rpc", "tid": 0 }]
 */
 BEGIN
     RETURN QUERY 
@@ -23,4 +23,4 @@ $$;
 
 ALTER FUNCTION dbo.of_mui_cd_templates(sender jsonb, _c_version text) OWNER TO mobwal;
 
-COMMENT ON FUNCTION dbo.of_mui_cd_templates(sender jsonb, _c_version text) IS 'Список шаблона';
+COMMENT ON FUNCTION dbo.of_mui_cd_templates(sender jsonb, _c_version text) IS 'Список шаблонов';

@@ -6,7 +6,7 @@ CREATE OR REPLACE FUNCTION dbo.of_mui_cd_points(sender jsonb, _c_version text) R
 * @params {text} _c_version - текущая версия приложения
 *
 * @example
-* [{ "action": "of_mui_cd_points", "method": "Select", "data": [{ "params": [sender, _c_version] }], "type": "rpc", "tid": 0 }]
+* [{ "action": "of_mui_cd_points", "schema": "dbo", "method": "Select", "data": [{ "params": [sender, _c_version] }], "type": "rpc", "tid": 0 }]
 */
 BEGIN
     RETURN QUERY 
@@ -23,9 +23,8 @@ BEGIN
 		p.c_comment
 	from dbo.cd_points as p
     inner join dbo.cd_routes as r on r.id = p.fn_route
-	inner join dbo.cd_route_history as rh ON rh.f_route = r.id
-	inner join dbo.cs_route_statuses as rs ON rh.f_status = rs.id
-	where rh.f_user = (sender#>>'{id}')::bigint and (rs.c_const = 'ASSIGNED' or rs.c_const = 'NO_VERIFIED');
+	inner join dbo.cs_route_statuses as rs ON r.f_status = rs.id
+	where r.f_user = (sender#>>'{id}')::bigint and rs.c_const = 'ASSIGNED';
 END
 $$;
 

@@ -21,8 +21,7 @@ CREATE TABLE core.pd_users (
 	d_change_date timestamp without time zone,
 	b_disabled boolean DEFAULT false NOT NULL,
 	sn_delete boolean DEFAULT false NOT NULL,
-	d_date_remove timestamp without time zone,
-	b_back_pay boolean DEFAULT false NOT NULL
+	d_date_remove timestamp without time zone
 );
 
 ALTER TABLE core.pd_users OWNER TO mobwal;
@@ -67,11 +66,13 @@ COMMENT ON COLUMN core.pd_users.sn_delete IS 'Удален';
 
 COMMENT ON COLUMN core.pd_users.d_date_remove IS 'Дата удаления';
 
-COMMENT ON COLUMN core.pd_users.b_back_pay IS 'Оплата по факту периода. Разрешено заходить в минус';
-
 --------------------------------------------------------------------------------
 
 CREATE INDEX pd_users_b_disabled_sn_delete_idx ON core.pd_users USING btree (b_disabled, sn_delete);
+
+--------------------------------------------------------------------------------
+
+CREATE INDEX pd_users_f_level_idx ON core.pd_users USING btree (f_level);
 
 --------------------------------------------------------------------------------
 

@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION core.sf_users(_f_user bigint) RETURNS TABLE(id bigint, c_login text, c_claims text, b_disabled boolean, c_name text, c_post text, c_about text, d_last_auth_date timestamp without time zone, c_imp_id text, c_notice text, c_email text)
+CREATE OR REPLACE FUNCTION core.sf_users(_f_user bigint) RETURNS TABLE(id bigint, c_login text, c_claims text, b_disabled boolean, c_name text, c_post text, c_about text, d_last_auth_date timestamp without time zone, c_imp_id text, c_notice text, c_email text, f_level uuid)
     LANGUAGE plpgsql
     AS $$
 /**
@@ -20,7 +20,8 @@ BEGIN
 	u.d_last_auth_date,
 	u.c_imp_id,
 	u.c_notice,
-	u.c_email
+	u.c_email,
+	u.f_level
    FROM core.pd_users u
   WHERE u.id = _f_user and u.sn_delete = false;
 END;
