@@ -11,7 +11,8 @@ CREATE TABLE dbo.cd_points (
 	b_anomaly boolean DEFAULT false NOT NULL,
 	b_check boolean DEFAULT false NOT NULL,
 	c_comment text,
-	dx_created timestamp without time zone DEFAULT now() NOT NULL
+	dx_created timestamp without time zone DEFAULT now() NOT NULL,
+	b_disabled boolean DEFAULT false NOT NULL
 );
 
 ALTER TABLE dbo.cd_points OWNER TO mobwal;

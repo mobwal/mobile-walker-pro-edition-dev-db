@@ -9,9 +9,9 @@ CREATE TABLE dbo.cd_results (
 	c_notice text,
 	n_distance bigint,
 	fn_template uuid,
-	b_disabled boolean DEFAULT false NOT NULL,
 	d_date timestamp without time zone,
-	dx_created timestamp without time zone DEFAULT now() NOT NULL
+	dx_created timestamp without time zone DEFAULT now() NOT NULL,
+	b_disabled boolean DEFAULT false NOT NULL
 );
 
 ALTER TABLE dbo.cd_results OWNER TO mobwal;
@@ -24,15 +24,13 @@ COMMENT ON COLUMN dbo.cd_results.fn_route IS 'Маршрут';
 
 COMMENT ON COLUMN dbo.cd_results.fn_point IS 'Точка маршрута';
 
-COMMENT ON COLUMN dbo.cd_results.d_date IS 'Дата создания';
-
-COMMENT ON COLUMN dbo.cd_results.b_disabled IS 'Признак отключения';
-
 COMMENT ON COLUMN dbo.cd_results.n_longitude IS 'Долгота';
 
 COMMENT ON COLUMN dbo.cd_results.n_latitude IS 'Широта';
 
 COMMENT ON COLUMN dbo.cd_results.jb_data IS 'JSON данные';
+
+COMMENT ON COLUMN dbo.cd_results.d_date IS 'Дата создания';
 
 COMMENT ON COLUMN dbo.cd_results.dx_created IS 'Дата создания в БД';
 

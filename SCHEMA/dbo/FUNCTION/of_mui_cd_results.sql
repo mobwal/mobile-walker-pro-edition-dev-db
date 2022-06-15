@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION dbo.of_mui_cd_results(sender jsonb, _c_version text) RETURNS TABLE(id uuid, fn_route uuid, fn_point uuid, fn_user bigint, d_date timestamp without time zone, b_disabled boolean, n_longitude numeric, n_latitude numeric, jb_data text, c_notice text, n_distance bigint, fn_template uuid)
+CREATE OR REPLACE FUNCTION dbo.of_mui_cd_results(sender jsonb, _c_version text) RETURNS TABLE(id uuid, fn_route uuid, fn_point uuid, fn_user bigint, d_date timestamp without time zone, n_longitude numeric, n_latitude numeric, jb_data text, c_notice text, n_distance bigint, fn_template uuid, b_server boolean, b_disabled boolean)
     LANGUAGE plpgsql STABLE
     AS $$
 /**
@@ -11,18 +11,19 @@ CREATE OR REPLACE FUNCTION dbo.of_mui_cd_results(sender jsonb, _c_version text) 
 BEGIN
     RETURN QUERY 
 	select
-		r.id,
-		r.fn_route,
-		r.fn_point,
-		r.fn_user,
-		r.d_date,
-		r.b_disabled,
-		r.n_longitude,
-		r.n_latitude,
-		r.jb_data::text,
-		r.c_notice,
-		r.n_distance,
-		r.fn_template
+		rr.id,
+		rr.fn_route,
+		rr.fn_point,
+		rr.fn_user,
+		rr.d_date,
+		rr.n_longitude,
+		rr.n_latitude,
+		rr.jb_data::text,
+		rr.c_notice,
+		rr.n_distance,
+		rr.fn_template,
+		true,
+		rr.b_disabled
 	from dbo.cd_results as rr
     inner join dbo.cd_routes as r on r.id = rr.fn_route
 	inner join dbo.cs_route_statuses as rs ON r.f_status = rs.id

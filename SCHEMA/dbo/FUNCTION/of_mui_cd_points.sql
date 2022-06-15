@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION dbo.of_mui_cd_points(sender jsonb, _c_version text) RETURNS TABLE(id uuid, fn_route uuid, c_address text, c_description text, n_order integer, n_longitude numeric, n_latitude numeric, jb_data text, b_anomaly boolean, b_check boolean, c_comment text)
+CREATE OR REPLACE FUNCTION dbo.of_mui_cd_points(sender jsonb, _c_version text) RETURNS TABLE(id uuid, fn_route uuid, c_address text, c_description text, n_order integer, n_longitude numeric, n_latitude numeric, jb_data text, b_anomaly boolean, b_check boolean, c_comment text, b_server boolean, b_disabled boolean)
     LANGUAGE plpgsql STABLE
     AS $$
 /**
@@ -20,7 +20,9 @@ BEGIN
 		p.jb_data::text,
 		p.b_anomaly,
 		p.b_check,
-		p.c_comment
+		p.c_comment,
+		true,
+		p.b_disabled
 	from dbo.cd_points as p
     inner join dbo.cd_routes as r on r.id = p.fn_route
 	inner join dbo.cs_route_statuses as rs ON r.f_status = rs.id

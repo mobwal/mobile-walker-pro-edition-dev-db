@@ -13,7 +13,8 @@ CREATE TABLE dbo.cd_attachments (
 	c_mime text NOT NULL,
 	n_distance bigint,
 	d_date timestamp without time zone,
-	dx_created timestamp without time zone DEFAULT now() NOT NULL
+	dx_created timestamp without time zone DEFAULT now() NOT NULL,
+	b_disabled boolean DEFAULT false NOT NULL
 );
 
 ALTER TABLE dbo.cd_attachments OWNER TO mobwal;
