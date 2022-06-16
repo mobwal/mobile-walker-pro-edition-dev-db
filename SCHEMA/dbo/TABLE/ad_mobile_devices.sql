@@ -10,7 +10,8 @@ CREATE TABLE dbo.ad_mobile_devices (
 	c_version text,
 	dx_created timestamp with time zone DEFAULT now() NOT NULL,
 	n_version bigint,
-	c_session_id uuid NOT NULL
+	c_session_id uuid NOT NULL,
+	c_ip text
 );
 
 ALTER TABLE dbo.ad_mobile_devices OWNER TO mobwal;

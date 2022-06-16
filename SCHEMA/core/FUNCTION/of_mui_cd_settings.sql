@@ -11,9 +11,9 @@ CREATE OR REPLACE FUNCTION core.of_mui_cd_settings(sender jsonb, _c_version text
 BEGIN
     RETURN QUERY 
 	select
-		s.c_key,
-		s.c_value,
-		s.c_type
+		lower(s.c_key),
+		lower(s.c_value),
+		lower(s.c_type)
 	from core.sd_settings as s
 	where s.sn_delete = false;
 END

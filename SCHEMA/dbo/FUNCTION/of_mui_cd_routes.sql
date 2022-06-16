@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION dbo.of_mui_cd_routes(sender jsonb, _c_version text) RETURNS TABLE(id uuid, c_name text, c_description text, c_templates text)
+CREATE OR REPLACE FUNCTION dbo.of_mui_cd_routes(sender jsonb, _c_version text) RETURNS TABLE(id uuid, c_name text, c_description text, c_templates text, d_date timestamp without time zone)
     LANGUAGE plpgsql STABLE ROWS 100
     AS $$
 /**
@@ -10,14 +10,15 @@ CREATE OR REPLACE FUNCTION dbo.of_mui_cd_routes(sender jsonb, _c_version text) R
 */
 BEGIN
     RETURN QUERY 
-		select 
-			r.id, 
-			r.c_name, 
-			r.c_description, 
-			r.c_templates
-    	from dbo.cd_routes as r
-		inner join dbo.cs_route_statuses as rs ON r.f_status = rs.id
-		where r.f_user = (sender#>>'{id}')::bigint and rs.c_const = 'ASSIGNED';
+	select 
+		r.id, 
+		r.c_name, 
+		r.c_description, 
+		r.c_templates,
+		r.dx_created
+	from dbo.cd_routes as r
+	inner join dbo.cs_route_statuses as rs ON r.f_status = rs.id
+	where r.f_user = (sender#>>'{id}')::bigint and rs.c_const = 'ASSIGNED';
 END
 $$;
 
