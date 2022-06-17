@@ -17,7 +17,12 @@ BEGIN
     from dbo.cd_routes as r
 	left join core.pd_users as u on u.id = r.f_user
 	left join dbo.cs_route_statuses as rs ON r.f_status = rs.id
-	where case when _isAdmin then 1=1 else r.f_user = (sender#>>'{id}')::bigint end
+	where 
+		case when _isAdmin then 
+			r.f_user in (select lu.id from core.of_level_users(sender) as lu) 
+		else 
+			r.f_user = (sender#>>'{id}')::bigint 
+		end
 	order by r.dx_created desc;
 END
 $$;

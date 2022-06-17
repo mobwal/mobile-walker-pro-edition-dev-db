@@ -1,8 +1,9 @@
 START TRANSACTION;
 
 insert into core.pd_roles(id, c_name, c_description, n_weight) values 
-(1, 'admin', 'Администратор', 900),
-(2, 'user', 'Пользователь',	800);
+(1, 'master', 'Мастер', 1000),
+(2, 'admin', 'Администратор', 900),
+(3, 'user', 'Пользователь',	800);
 
 insert into core.pd_levels(id, f_parent, c_name) values
 ('ac64692c-e52e-60c6-bb0f-741a1b224c16', null, 'Филиал'),
@@ -14,7 +15,7 @@ insert into core.pd_users(id, c_login, c_password, c_about, f_level) values
 (2, 'user', '1234', 'Сотрудник', 'ac64692c-e52e-60c6-bb0f-741a1b224c16');
 
 insert into core.pd_userinroles(f_user, f_role)
-values(1, 1), (2, 2);
+values(1, 2), (2, 3);
 
 insert into dbo.cs_route_statuses(id, c_name, c_const, n_order) values
 (1, 'Создан', 'CREATED', 0),

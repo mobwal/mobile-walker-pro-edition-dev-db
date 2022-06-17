@@ -19,7 +19,7 @@ BEGIN
 		set s_hash = crypt(_new_password, gen_salt('bf')),
 		c_password = null,
 		d_last_change_password = now()
-		where u.c_login = _login and u.f_org = _f_org;
+		where u.c_login = _login;
 
 		return true;
 	else
@@ -27,7 +27,7 @@ BEGIN
 		set c_password = _new_password,
 		s_hash = null,
 		d_last_change_password = now()
-		where u.c_login = _login and u.f_org = _f_org;
+		where u.c_login = _login;
 
 		return true;
 	end if;

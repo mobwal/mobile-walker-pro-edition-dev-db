@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION core.of_level_users(sender jsonb) RETURNS TABLE(id bigint, c_login text, b_disabled boolean, d_created_date timestamp without time zone, d_change_date timestamp without time zone, c_about text, c_name text, c_post text, c_imp_id text, d_last_auth_date timestamp without time zone, f_level uuid, c_level text, c_notice text, c_created_user text, c_change_user text)
+CREATE OR REPLACE FUNCTION core.of_level_users(sender jsonb) RETURNS TABLE(id bigint, c_login text, f_role integer, c_role_name text, b_disabled boolean, d_created_date timestamp without time zone, d_change_date timestamp without time zone, c_about text, c_name text, c_post text, c_imp_id text, d_last_auth_date timestamp without time zone, f_level uuid, c_level text, c_notice text, c_created_user text, c_change_user text)
     LANGUAGE plpgsql
     AS $$
 /**
@@ -22,6 +22,8 @@ BEGIN
 	select 
 	u.id,
 	u.c_login,
+	uir.f_role,
+	r.c_description,
 	u.b_disabled,
 	u.d_created_date,
 	u.d_change_date,
@@ -36,6 +38,8 @@ BEGIN
 	u.c_created_user,
 	u.c_change_user
    FROM core.pd_users u
+   inner join core.pd_userinroles as uir on uir.f_user = u.id  
+   inner join core.pd_roles as r on r.id = uir.f_role
    left join core.pd_levels as l on u.f_level = l.id
    WHERE u.sn_delete = false and u.f_level in (select t.id from included_levels as t);
 END;

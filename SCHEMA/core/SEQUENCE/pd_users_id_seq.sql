@@ -1,11 +1,8 @@
 CREATE SEQUENCE core.pd_users_id_seq
-	START WITH 1
+	START WITH 3
 	INCREMENT BY 1
 	NO MAXVALUE
 	NO MINVALUE
 	CACHE 1;
 
 ALTER SEQUENCE core.pd_users_id_seq OWNER TO mobwal;
-
-ALTER SEQUENCE core.pd_users_id_seq
-	OWNED BY core.pd_users.id;

@@ -25,7 +25,7 @@ BEGIN
 	u.d_created_date,
 	u.d_change_date,
 	u.c_about,
-	u.c_name,
+	case when u.c_name = '' or u.c_name is null then u.c_login else u.c_name end,
 	u.c_post,
 	u.c_imp_id,
 	u.d_last_auth_date,
@@ -39,7 +39,7 @@ BEGIN
    inner join core.pd_userinroles as uir on uir.f_user = u.id
    inner join core.pd_roles as r on r.id = uir.f_role
    
-   where r.c_name = 'user' and u.sn_delete = false 
+   where r.c_name in ('admin', 'user') and u.sn_delete = false 
    and u.f_level in (select t.id from included_levels as t);
 END
 $$;
