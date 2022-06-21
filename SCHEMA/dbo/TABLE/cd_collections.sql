@@ -37,5 +37,9 @@ COMMENT ON COLUMN dbo.cd_collections.dx_created IS 'Дата создания в
 
 --------------------------------------------------------------------------------
 
+CREATE INDEX cd_collections_c_address_idx ON dbo.cd_collections USING btree (c_address);
+
+--------------------------------------------------------------------------------
+
 ALTER TABLE dbo.cd_collections
 	ADD CONSTRAINT cd_collections_pkey PRIMARY KEY (id);

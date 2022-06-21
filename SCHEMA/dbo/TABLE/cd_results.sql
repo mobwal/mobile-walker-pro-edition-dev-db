@@ -36,5 +36,9 @@ COMMENT ON COLUMN dbo.cd_results.dx_created IS 'Дата создания в Б�
 
 --------------------------------------------------------------------------------
 
+CREATE INDEX cd_results_fn_route_idx ON dbo.cd_results USING btree (fn_route);
+
+--------------------------------------------------------------------------------
+
 ALTER TABLE dbo.cd_results
 	ADD CONSTRAINT cd_results_pkey PRIMARY KEY (id);
